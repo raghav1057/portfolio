@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raghav Pant - Portfolio</title>
+    <meta name="description" content ="IT student building things that actually work. Portfolio of Raghav Pant"/>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+
+
+ 
+</head>
+<body>
+
+    <nav>
+        <div class="nav-logo">RP.dev</div>
+
+        <ul class="nav-links">
+        <li><a href="#projects">projects</a></li>
+        <li><a href="#about">about</a></li>
+        <li><a href="#writing">writing</a></li>
+        <li><a href="#contact">contact</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <sectionid="hero">
+            <p class="terminal-label">whoami</p>
+            <h1>Raghav <span class="accent">Pant.</span></h1>
+
+            <p class="typewriter-line">
+                <span class="prefix">//currently</span>
+                <span id="typewriter-text">building things. sometimes they work.</span>
+                <span class="cursor">|</span>
+            </p>
+
+            <p class ="tagline">I dont have all the answers, But I'm annoyingly curious.</p>
+            <div class="cta-buttons">
+                <a href="#projects" class="btn-primary">see my work</a>
+                <a href="#contact" class="btn-secondary">say hi</a>
+            </div>
+        </section>
+
+        <section id="about">
+            <p class="section-label">>about.txt</p>
+            <p class="about-text">
+                4th year IT student from delhi, currently somewhere between <strong>"it works fine here"</strong> and <strong>"IT WORKS!"</strong>
+                I build things that scratch a real itch- An AI powered environmental monitoring dashboard, a tool for competitive programmers, 
+                a simple little weather web-app and some other things which i wanted to.
+                Into gaming, music, films, and sport, which means I think about<strong> who uses things</strong>, not just how they're built.
+                Still learning. <strong>Loudly.</strong>
+            </p>
+        </section>
+
+        <section id="projects">
+            <p class="section-label">> projects/</p>
+            
+            <div class="projects-grid">
+
+                <!-- PROJECT 1- EcoTwin -->
+                <article class ="project-card">
+                    <span class="project-tag">python · fastapi · ml · hackathon</span>
+                    <h3 class="project-title">EcoTwin — AI Environmental Digital Twin</h3>
+                    <p class="project-desc">
+                        Built at Hack4impact. Ingests live air quality data from NASA and OpenAQ, trains
+                         XGBoost models to forecast Delhi's AQI up to 24 hours ahead, and predicts pollution 
+                         hotspots across a city grid — all on a live heatmap dashboard.
+                    </p>
+                    <p class="project-lesson">
+              // what I learned: an ML model is 20% of the work. Getting real data into it without breaking everything is the other 80%.
+            </p>
+            <div class="project-links">
+              <a href="https://github.com/raghav1057/EcoTwin" target="_blank">github →</a>
+            </div>
+            </article>
+
+            <!-- PROJECT 2- CodeForces Analyzer -->
+          <article class="project-card">
+            <span class="project-tag">python · flask · api</span>
+            <h3 class="project-title">CodeForces Analyzer</h3>
+            <p class="project-desc">
+              Competitive programmers track everything — except their own progress.
+              Built a web dashboard that pulls live data from the CodeForces API,
+              visualises problem difficulty, upcoming contests, and serves a random
+              problem for daily practice. Full-stack: Python/Flask backend, HTML/CSS/JS frontend.
+            </p>
+            <p class="project-lesson">
+              // what I learned: talking to an external API sounds scary until you do it once. Then it's just a URL.
+            </p>
+            <div class="project-links">
+              <a href="https://github.com/raghav1057/CodeForces-Analyzer" target="_blank">github →</a>
+            </div>
+          </article>
+ 
+          <!-- PROJECT 3- WeatherApp-->
+          <article class="project-card">
+            <span class="project-tag">html · css · javascript</span>
+            <h3 class="project-title">WeatherApp</h3>
+            <p class="project-desc">
+              My first real project using a live API. Type a city, get the weather —
+              simple premise, genuinely useful output. Built with vanilla JS hitting
+              the OpenWeather API. No frameworks, no shortcuts.
+            </p>
+            <p class="project-lesson">
+              // what I'd do differently: add a 5-day forecast and stop assuming everyone lives somewhere with good weather.
+            </p>
+            <div class="project-links">
+              <a href="https://github.com/raghav1057/WeatherApp" target="_blank">github →</a>
+            </div>
+          </article>
+        </div>
+        </section>
+        <section id="skills">
+        <p class="section-label">> skills.log</p>
+ 
+        <div class="skills-group">
+          <p class="skills-sublabel">know it</p>
+          <ul class="skills-list">
+            <li>Python</li>
+            <li>HTML</li>
+            <li>CSS</li>
+            <li>JavaScript</li>
+            <li>Flask</li>
+            <li>FastAPI</li>
+            <li>PostgreSQL</li>
+            <li>Git</li>
+            <li>REST APIs</li>
+          </ul>
+        </div>
+ 
+        <div class="skills-group">
+          <p class="skills-sublabel learning">learning it</p>
+          <ul class="skills-list learning">
+            <li>React</li>
+            <li>Docker</li>
+            <li>Machine Learning</li>
+          </ul>
+        </div>
+      </section>
+    <section id="writing">
+        <p class="section-label">> writing/</p>
+ 
+        <article class="writing-card">
+          <h3>What I built, what broke, and what I'd do differently</h3>
+          <p>
+            A reflection on EcoTwin — the problem I was trying to solve, the three times
+            I nearly gave up, and the one thing I'd change if I started over.
+          </p>
+          <a href="#" class="read-link">read it →</a>
+        </article>
+      </section>
+ 
+    </main>
+ 
+    <footer id="contact">
+      <p class="footer-line">if you've read this far, you might as well say hi.</p>
+ 
+      <nav class="footer-links">
+        <a href="https://github.com/raghav1057" target="_blank">github</a>
+        <a href="https://www.linkedin.com/in/raghav-pant-9881391b7/" target="_blank">linkedin</a>
+        <a href="mailto:raghavpantwork@gmail.com">email</a>
+      </nav>
+ 
+      <p class="footer-copy">© 2026 Raghav Pant</p>
+    </footer>
+    
+</body>
+</html>
