@@ -2,7 +2,7 @@
 
 A personal portfolio built from scratch — no templates, no frameworks, just HTML, CSS, and vanilla JavaScript. Designed with a retro terminal aesthetic because blending in is boring.
 
-🌐 **Live site:** https://portfolio-fawn-one-cq0u5qh0d3.vercel.app
+🌐 **Live site:** https://raghavpant.vercel.app/
 
 ---
 
