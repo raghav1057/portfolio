@@ -1,0 +1,513 @@
+/* ============================================================
+   CSS VARIABLES — define once, use everywhere
+   :root means "the very top of the document"
+   Think of these as your design system's colour palette + fonts
+   ============================================================ */
+:root {
+  --bg:         #0f0f0f;   /* main background — deep black */
+  --bg-card:    #161616;   /* slightly lighter — for cards */
+  --border:     #2a2a2a;   /* subtle borders */
+  --green:      #b8f94a;   /* lime accent — your primary colour */
+  --amber:      #f5a623;   /* warm orange — for highlights */
+  --text:       #e8e8e0;   /* main text — off white, easier on eyes than pure white */
+  --text-muted: #888888;   /* secondary text — less important things */
+  --text-dim:   #555555;   /* very muted — decorative labels */
+
+  --font-main: 'Space Grotesk', sans-serif;   /* headings + body */
+  --font-mono: 'JetBrains Mono', monospace;   /* terminal style labels */
+}
+
+
+/* ============================================================
+   RESET — browsers add their own default styles (margins,
+   paddings, bullet points on lists etc). We wipe those first
+   so we start from a clean slate.
+   * means "apply to every single element on the page"
+   box-sizing: border-box means padding doesn't ADD to width,
+   it's included inside it. Makes sizing predictable.
+   ============================================================ */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+/* ============================================================
+   BASE — the foundation styles for the whole page
+   ============================================================ */
+html {
+  /* smooth scrolling when nav links jump to sections */
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-main);
+  font-size: 16px;
+  line-height: 1.6;  /* space between lines of text */
+
+  /* subtle scanline texture — gives the retro CRT monitor feel */
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+}
+
+/* links have no underline by default throughout the site */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* lists have no bullet points by default throughout the site */
+ul {
+  list-style: none;
+}
+
+
+/* ============================================================
+   NAV — the top navigation bar
+   display: flex makes the logo and links sit side by side
+   justify-content: space-between pushes them to opposite ends
+   position: sticky makes it stick to the top as you scroll
+   ============================================================ */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;           /* vertically center everything */
+  padding: 1.25rem 2rem;
+  border-bottom: 1px solid var(--border);
+  position: sticky;              /* sticks to top when scrolling */
+  top: 0;
+  background-color: var(--bg);  /* needs bg so content doesn't show through */
+  z-index: 100;                  /* sits on top of everything else */
+}
+
+.nav-logo {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--green);
+  letter-spacing: 0.05em;
+}
+
+.nav-links {
+  display: flex;   /* makes the list items sit in a row */
+  gap: 1.5rem;     /* space between each link */
+}
+
+.nav-links a {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-muted);
+  transition: color 0.2s;   /* smooth colour change on hover */
+}
+
+/* :hover means "when the mouse is over this element" */
+.nav-links a:hover {
+  color: var(--green);
+}
+
+
+/* ============================================================
+   SECTIONS — shared styles for all sections
+   We give each section generous padding so content breathes
+   ============================================================ */
+section {
+  padding: 4rem 2rem;
+  border-bottom: 1px solid var(--border);
+  /* max-width centres content on very wide screens */
+  max-width: 900px;
+  margin: 0 auto;   /* auto left+right margin = centred */
+}
+
+/* the small terminal-style label above each section's content */
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--green);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+
+/* ============================================================
+   HERO SECTION — the first thing people see
+   ============================================================ */
+#hero {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+/* the $ whoami label */
+.terminal-label {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-bottom: 1rem;
+}
+
+.terminal-label span {
+  color: var(--green);
+}
+
+/* your name — big and bold */
+h1 {
+  font-size: clamp(42px, 8vw, 72px);
+  /* clamp(min, preferred, max) — scales with screen size */
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+}
+
+/* the lime green on "Pant." */
+.accent {
+  color: var(--green);
+}
+
+/* the typewriter line */
+.typewriter-line {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  min-height: 24px;  /* stops layout jumping when text changes */
+}
+
+.prefix {
+  color: var(--text-dim);
+}
+
+#typewriter-text {
+  color: var(--amber);
+}
+
+/* the blinking cursor after typewriter text */
+.cursor {
+  display: inline-block;
+  color: var(--green);
+  animation: blink 0.8s step-end infinite;
+  /* step-end makes it snap on/off instead of fading */
+}
+
+/* @keyframes defines an animation
+   from 0% to 100% of the animation duration */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* your main tagline */
+.tagline {
+  font-size: 18px;
+  color: var(--text-muted);
+  max-width: 500px;
+  line-height: 1.65;
+  margin-bottom: 2.5rem;
+}
+
+.tagline strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* the two buttons row */
+.cta-buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;  /* wraps to next line on small screens */
+}
+
+/* primary button — green outlined */
+.btn-primary {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  padding: 10px 22px;
+  border: 1px solid var(--green);
+  border-radius: 6px;
+  color: var(--green);
+  background: transparent;
+  transition: background 0.2s, color 0.2s;
+}
+
+.btn-primary:hover {
+  background: var(--green);
+  color: var(--bg);  /* black text on green background */
+}
+
+/* secondary button — dimmer, ghost style */
+.btn-secondary {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  padding: 10px 22px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-muted);
+  background: transparent;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.btn-secondary:hover {
+  background: #1e1e1e;
+  color: var(--text);
+  border-color: #555;
+}
+
+
+/* ============================================================
+   ABOUT SECTION
+   ============================================================ */
+.about-text {
+  font-size: 16px;
+  color: var(--text-muted);
+  max-width: 580px;
+  line-height: 1.8;
+}
+
+.about-text strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+
+/* ============================================================
+   PROJECTS SECTION
+   CSS Grid — think of it like a table but flexible
+   auto-fit means "fit as many columns as possible"
+   minmax(280px, 1fr) means each column is at least 280px wide
+   On wide screens: 3 columns. Mobile: 1 column. Auto.
+   ============================================================ */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.project-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.5rem;
+  /* transition makes the hover effect smooth */
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.project-card:hover {
+  border-color: var(--green);
+  transform: translateY(-3px);  /* floats up 3px on hover */
+}
+
+/* the small tag like "python · flask · api" */
+.project-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--green);
+  background: rgba(184, 249, 74, 0.08);  /* rgba = red,green,blue,opacity */
+  border: 1px solid rgba(184, 249, 74, 0.2);
+  border-radius: 4px;
+  padding: 2px 8px;
+  display: inline-block;  /* lets us add padding to a text element */
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.project-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 0.6rem;
+}
+
+.project-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.65;
+  margin-bottom: 1rem;
+}
+
+/* the "// what I learned" line at the bottom of each card */
+.project-lesson {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--amber);
+  border-top: 1px solid var(--border);
+  padding-top: 0.75rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.project-links a {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-dim);
+  transition: color 0.2s;
+}
+
+.project-links a:hover {
+  color: var(--green);
+}
+
+
+/* ============================================================
+   SKILLS SECTION
+   ============================================================ */
+.skills-group {
+  margin-bottom: 1.5rem;
+}
+
+/* the "know it" / "learning it" sublabels */
+.skills-sublabel {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  letter-spacing: 0.08em;
+  margin-bottom: 0.75rem;
+}
+
+.skills-sublabel.learning {
+  color: var(--amber);
+}
+
+/* the skills pill row */
+.skills-list {
+  display: flex;
+  flex-wrap: wrap;  /* wraps to next line if too many */
+  gap: 8px;
+}
+
+.skills-list li {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 5px 14px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text-muted);
+  background: var(--bg-card);
+}
+
+/* learning skills get amber colour */
+.skills-list.learning li {
+  border-color: rgba(245, 166, 35, 0.3);
+  color: var(--amber);
+  background: rgba(245, 166, 35, 0.06);
+}
+
+
+/* ============================================================
+   WRITING SECTION
+   ============================================================ */
+.writing-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.5rem;
+  max-width: 540px;
+  transition: border-color 0.2s;
+}
+
+.writing-card:hover {
+  border-color: var(--green);
+}
+
+.writing-card h3 {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 0.6rem;
+}
+
+.writing-card p {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.65;
+  margin-bottom: 1rem;
+}
+
+.read-link {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--green);
+  transition: letter-spacing 0.2s;
+}
+
+.read-link:hover {
+  letter-spacing: 0.05em;  /* slightly spreads on hover — subtle, classy */
+}
+
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;   /* stacks children vertically */
+  align-items: center;      /* centres them horizontally */
+  gap: 1rem;
+  border-top: 1px solid var(--border);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.footer-line {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.footer-links a {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-dim);
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: var(--green);
+}
+
+.footer-copy {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #333;
+}
+
+
+/* ============================================================
+   RESPONSIVE — mobile friendly
+   @media means "apply these rules ONLY when screen is narrow"
+   768px is roughly a tablet/phone breakpoint
+   ============================================================ */
+@media (max-width: 768px) {
+  nav {
+    padding: 1rem;
+  }
+
+  .nav-links {
+    gap: 1rem;
+  }
+
+  section {
+    padding: 3rem 1.25rem;
+  }
+
+  h1 {
+    font-size: 38px;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;  /* single column on mobile */
+  }
+}
