@@ -8,52 +8,93 @@ const phrases = [
 ];
 
 const el = document.getElementById("typewriter-text");
-
-let phraseIndex = 0;
-let charIndex   = 0;
-let isDeleting  = false;
+let phraseIndex = 0, charIndex = 0, isDeleting = false;
 
 function typewriter() {
-  const currentPhrase = phrases[phraseIndex];
+  const current = phrases[phraseIndex];
+  el.textContent = isDeleting
+    ? current.slice(0, charIndex - 1)
+    : current.slice(0, charIndex + 1);
 
-  if (!isDeleting) {
-    el.textContent = currentPhrase.slice(0, charIndex + 1);
-    charIndex++;
+  isDeleting ? charIndex-- : charIndex++;
 
-    if (charIndex === currentPhrase.length) {
-      isDeleting = true;
-      setTimeout(typewriter, 1800);
-      return;
-    }
-  } else {
-    el.textContent = currentPhrase.slice(0, charIndex - 1);
-    charIndex--;
-
-    if (charIndex === 0) {
-      isDeleting = false;
-      phraseIndex = (phraseIndex + 1) % phrases.length;
-      setTimeout(typewriter, 400);
-      return;
-    }
+  if (!isDeleting && charIndex === current.length) {
+    isDeleting = true;
+    setTimeout(typewriter, 1800);
+    return;
   }
-
-  const speed = isDeleting ? 40 : 70;
-  setTimeout(typewriter, speed);
+  if (isDeleting && charIndex === 0) {
+    isDeleting = false;
+    phraseIndex = (phraseIndex + 1) % phrases.length;
+    setTimeout(typewriter, 400);
+    return;
+  }
+  setTimeout(typewriter, isDeleting ? 40 : 70);
 }
 
 setTimeout(typewriter, 600);
 
 
-// SCROLL ANIMATIONS
-// fires when elements enter the viewport, adds 'visible' class
-const observer = new IntersectionObserver((entries) => {
+// SCROLL ANIMATIONS — slower threshold so animation is visible
+const scrollObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) entry.target.classList.add("visible");
+  });
+}, { threshold: 0.08 });
+
+document.querySelectorAll("section, article, .project-row").forEach((el) => {
+  scrollObserver.observe(el);
+});
+
+
+// ACTIVE NAV INDICATOR
+const sections = document.querySelectorAll("section[id]");
+const navLinks = document.querySelectorAll(".nav-links a");
+
+const navObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
-      entry.target.classList.add("visible");
+      navLinks.forEach((l) => l.classList.remove("active"));
+      const active = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
+      if (active) active.classList.add("active");
     }
   });
-}, { threshold: 0.1 });
+}, { threshold: 0.4 });
 
-document.querySelectorAll("section, article").forEach((el) => {
-  observer.observe(el);
+sections.forEach((s) => navObserver.observe(s));
+
+
+// BACK TO TOP
+const backToTop = document.getElementById("back-to-top");
+
+window.addEventListener("scroll", () => {
+  backToTop.classList.toggle("visible", window.scrollY > 400);
+});
+
+backToTop.addEventListener("click", () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+
+// COPY EMAIL
+const emailLink = document.getElementById("email-link");
+
+emailLink.addEventListener("click", (e) => {
+  e.preventDefault();
+  navigator.clipboard.writeText("raghavpantwork@gmail.com").then(() => {
+    const original = emailLink.textContent;
+    emailLink.textContent = "copied!";
+    emailLink.style.color = "var(--green)";
+    setTimeout(() => {
+      emailLink.textContent = original;
+      emailLink.style.color = "";
+    }, 2000);
+  });
+});
+
+
+// TAB EASTER EGG
+const originalTitle = document.title;
+document.addEventListener("visibilitychange", () => {
+  document.title = document.hidden ? "come back... 👀" : originalTitle;
 });

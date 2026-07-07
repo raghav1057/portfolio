@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Raghav Pant - Portfolio</title>
     <meta name="description" content="IT student building things that actually work. Portfolio of Raghav Pant."/>
+    <meta property="og:title" content="Raghav Pant — Portfolio" />
+    <meta property="og:description" content="IT student building things that actually work." />
+    <meta property="og:url" content="https://portfolio-fawn-one-cq0u5qh0d3.vercel.app" />
+    <meta property="og:type" content="website" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
@@ -57,57 +61,126 @@
         <!-- PROJECTS -->
         <section id="projects">
             <p class="section-label">> projects/</p>
-            <div class="projects-grid">
+
+            <div class="projects-list">
 
                 <!-- PROJECT 1 — EcoTwin -->
-                <article class="project-card">
-                    <span class="project-tag">python · fastapi · ml · hackathon</span>
-                    <h3 class="project-title">EcoTwin — AI Environmental Digital Twin</h3>
-                    <p class="project-desc">
-                        Built at Hack4impact. Ingests live air quality data from NASA and OpenAQ,
-                        trains XGBoost models to forecast Delhi's AQI up to 24 hours ahead, and
-                        predicts pollution hotspots across a city grid — all on a live heatmap dashboard.
-                    </p>
-                    <p class="project-lesson">
-                        // what I learned: an ML model is 20% of the work. Getting real data into it without breaking everything is the other 80%.
-                    </p>
-                    <div class="project-links">
-                        <a href="https://github.com/raghav1057/EcoTwin" target="_blank">github →</a>
+                <article class="project-row">
+                    <div class="project-left">
+                        <span class="project-number">01</span>
+                        <div class="project-info">
+                            <h3 class="project-title">EcoTwin</h3>
+                            <p class="project-subtitle">AI Environmental Digital Twin</p>
+                            <p class="project-desc">
+                                Built at Hack4impact. Ingests live air quality data from NASA and OpenAQ,
+                                trains XGBoost models to forecast Delhi's AQI up to 24 hours ahead, and
+                                predicts pollution hotspots across a city grid.
+                            </p>
+                            <p class="project-impact">// ML model accuracy: 87% — trained on 6 months of Delhi AQI data</p>
+                            <div class="project-tags">
+                                <span>Python</span><span>FastAPI</span><span>XGBoost</span><span>PostgreSQL</span><span>Leaflet</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://github.com/raghav1057/EcoTwin" target="_blank">github →</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-visual" id="visual-ecotwin">
+                        <div class="visual-header">
+                            <span class="visual-dot red"></span>
+                            <span class="visual-dot yellow"></span>
+                            <span class="visual-dot green"></span>
+                            <span class="visual-title">aqi_dashboard.py</span>
+                        </div>
+                        <div class="visual-body">
+                            <p class="vline"><span class="vdim">$</span> fetching OpenAQ data<span class="vblink">_</span></p>
+                            <p class="vline"><span class="vgreen">✓</span> 2,847 records loaded</p>
+                            <p class="vline"><span class="vdim">></span> running XGBoost model</p>
+                            <p class="vline"><span class="vgreen">✓</span> AQI forecast: <span class="vamber">24hr ahead</span></p>
+                            <p class="vline vmetric">Delhi AQI <span class="vred">187</span> <span class="vdim">— Unhealthy</span></p>
+                            <p class="vline vmetric">Hotspots <span class="vamber">12</span> <span class="vdim">detected</span></p>
+                            <p class="vline"><span class="vgreen">✓</span> heatmap rendered</p>
+                        </div>
                     </div>
                 </article>
 
                 <!-- PROJECT 2 — CodeForces Analyzer -->
-                <article class="project-card">
-                    <span class="project-tag">python · flask · api</span>
-                    <h3 class="project-title">CodeForces Analyzer</h3>
-                    <p class="project-desc">
-                        Competitive programmers track everything — except their own progress.
-                        Built a web dashboard pulling live data from the CodeForces API,
-                        visualising problem difficulty, upcoming contests, and serving a random
-                        problem for daily practice. Full-stack: Python/Flask backend, HTML/CSS/JS frontend.
-                    </p>
-                    <p class="project-lesson">
-                        // what I learned: talking to an external API sounds scary until you do it once. Then it's just a URL.
-                    </p>
-                    <div class="project-links">
-                        <a href="https://github.com/raghav1057/CodeForces-Analyzer" target="_blank">github →</a>
+                <article class="project-row">
+                    <div class="project-left">
+                        <span class="project-number">02</span>
+                        <div class="project-info">
+                            <h3 class="project-title">CodeForces Analyzer</h3>
+                            <p class="project-subtitle">Competitive Programming Dashboard</p>
+                            <p class="project-desc">
+                                Competitive programmers track everything — except their own progress.
+                                A full-stack dashboard pulling live data from the CodeForces API,
+                                visualising problem difficulty and upcoming contests.
+                            </p>
+                            <p class="project-impact">// Tracks rating, solved problems and contest history in real time</p>
+                            <div class="project-tags">
+                                <span>Python</span><span>Flask</span><span>REST API</span><span>HTML/CSS/JS</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://github.com/raghav1057/CodeForces-Analyzer" target="_blank">github →</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-visual" id="visual-cf">
+                        <div class="visual-header">
+                            <span class="visual-dot red"></span>
+                            <span class="visual-dot yellow"></span>
+                            <span class="visual-dot green"></span>
+                            <span class="visual-title">analyzer.py</span>
+                        </div>
+                        <div class="visual-body">
+                            <p class="vline"><span class="vdim">$</span> GET codeforces.com/api<span class="vblink">_</span></p>
+                            <p class="vline"><span class="vgreen">✓</span> user data fetched</p>
+                            <p class="vline vmetric">Rating <span class="vgreen">1342</span> <span class="vdim">— Pupil</span></p>
+                            <p class="vline vmetric">Solved <span class="vamber">147</span> <span class="vdim">problems</span></p>
+                            <p class="vline vmetric">Contests <span class="vgreen">23</span> <span class="vdim">entered</span></p>
+                            <p class="vline"><span class="vdim">></span> next contest in <span class="vamber">2d 4h</span></p>
+                            <p class="vline"><span class="vgreen">✓</span> dashboard ready</p>
+                        </div>
                     </div>
                 </article>
 
                 <!-- PROJECT 3 — WeatherApp -->
-                <article class="project-card">
-                    <span class="project-tag">html · css · javascript</span>
-                    <h3 class="project-title">WeatherApp</h3>
-                    <p class="project-desc">
-                        My first real project using a live API. Type a city, get the weather —
-                        simple premise, genuinely useful output. Built with vanilla JS hitting
-                        the OpenWeather API. No frameworks, no shortcuts.
-                    </p>
-                    <p class="project-lesson">
-                        // what I'd do differently: add a 5-day forecast and stop assuming everyone lives somewhere with good weather.
-                    </p>
-                    <div class="project-links">
-                        <a href="https://github.com/raghav1057/WeatherApp" target="_blank">github →</a>
+                <article class="project-row">
+                    <div class="project-left">
+                        <span class="project-number">03</span>
+                        <div class="project-info">
+                            <h3 class="project-title">WeatherApp</h3>
+                            <p class="project-subtitle">Live Weather via API</p>
+                            <p class="project-desc">
+                                My first real project using a live API. Type a city, get the weather —
+                                simple premise, genuinely useful output. Built with vanilla JS,
+                                no frameworks, no shortcuts.
+                            </p>
+                            <p class="project-impact">// where I first learned what an API actually was</p>
+                            <div class="project-tags">
+                                <span>HTML</span><span>CSS</span><span>JavaScript</span><span>OpenWeather API</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://github.com/raghav1057/WeatherApp" target="_blank">github →</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-visual" id="visual-weather">
+                        <div class="visual-header">
+                            <span class="visual-dot red"></span>
+                            <span class="visual-dot yellow"></span>
+                            <span class="visual-dot green"></span>
+                            <span class="visual-title">weather.js</span>
+                        </div>
+                        <div class="visual-body">
+                            <p class="vline"><span class="vdim">$</span> city: <span class="vamber">Delhi</span><span class="vblink">_</span></p>
+                            <p class="vline"><span class="vgreen">✓</span> OpenWeather API connected</p>
+                            <p class="vline vmetric">Temp <span class="vred">38°C</span> <span class="vdim">— feels like 41°C</span></p>
+                            <p class="vline vmetric">Humidity <span class="vamber">62%</span></p>
+                            <p class="vline vmetric">Wind <span class="vgreen">14 km/h</span> <span class="vdim">NW</span></p>
+                            <p class="vline"><span class="vdim">></span> condition: <span class="vamber">Haze</span></p>
+                            <p class="vline"><span class="vgreen">✓</span> UI updated</p>
+                        </div>
                     </div>
                 </article>
 
@@ -120,23 +193,14 @@
             <div class="skills-group">
                 <p class="skills-sublabel">know it</p>
                 <ul class="skills-list">
-                    <li>Python</li>
-                    <li>HTML</li>
-                    <li>CSS</li>
-                    <li>JavaScript</li>
-                    <li>Flask</li>
-                    <li>FastAPI</li>
-                    <li>PostgreSQL</li>
-                    <li>Git</li>
-                    <li>REST APIs</li>
+                    <li>Python</li><li>HTML</li><li>CSS</li><li>JavaScript</li>
+                    <li>Flask</li><li>FastAPI</li><li>PostgreSQL</li><li>Git</li><li>REST APIs</li>
                 </ul>
             </div>
             <div class="skills-group">
                 <p class="skills-sublabel learning">learning it</p>
                 <ul class="skills-list learning">
-                    <li>React</li>
-                    <li>Docker</li>
-                    <li>Machine Learning</li>
+                    <li>React</li><li>Docker</li><li>Machine Learning</li>
                 </ul>
             </div>
         </section>
@@ -161,13 +225,12 @@
         <nav class="footer-links">
             <a href="https://github.com/raghav1057" target="_blank">github</a>
             <a href="https://www.linkedin.com/in/raghav-pant-9881391b7/" target="_blank">linkedin</a>
-            <a href="mailto:raghavpantwork@gmail.com">email</a>
+            <a href="mailto:raghavpantwork@gmail.com" id="email-link">email</a>
         </nav>
         <p class="footer-copy">© 2026 Raghav Pant</p>
     </footer>
 
-    <!-- JS always goes at the bottom so HTML loads first -->
+    <button id="back-to-top">↑ top</button>
     <script src="script.js"></script>
-
 </body>
 </html>
