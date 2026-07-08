@@ -61,7 +61,6 @@
         <!-- PROJECTS -->
         <section id="projects">
             <p class="section-label">> projects/</p>
-
             <div class="projects-list">
 
                 <!-- PROJECT 1 — EcoTwin -->
@@ -85,21 +84,55 @@
                             </div>
                         </div>
                     </div>
-                    <div class="project-visual" id="visual-ecotwin">
-                        <div class="visual-header">
-                            <span class="visual-dot red"></span>
-                            <span class="visual-dot yellow"></span>
-                            <span class="visual-dot green"></span>
-                            <span class="visual-title">aqi_dashboard.py</span>
+
+                    <!-- EcoTwin visual — inspired by the dashboard screenshot -->
+                    <div class="project-visual">
+                        <div class="et-topbar">
+                            <span class="et-brand">🌿 EcoTwin</span>
+                            <span class="et-location">📍 Delhi, IN</span>
+                            <span class="et-aqi">AQI <span class="amber">164</span></span>
+                            <span class="et-status">● SYSTEM ACTIVE</span>
                         </div>
-                        <div class="visual-body">
-                            <p class="vline"><span class="vdim">$</span> fetching OpenAQ data<span class="vblink">_</span></p>
-                            <p class="vline"><span class="vgreen">✓</span> 2,847 records loaded</p>
-                            <p class="vline"><span class="vdim">></span> running XGBoost model</p>
-                            <p class="vline"><span class="vgreen">✓</span> AQI forecast: <span class="vamber">24hr ahead</span></p>
-                            <p class="vline vmetric">Delhi AQI <span class="vred">187</span> <span class="vdim">— Unhealthy</span></p>
-                            <p class="vline vmetric">Hotspots <span class="vamber">12</span> <span class="vdim">detected</span></p>
-                            <p class="vline"><span class="vgreen">✓</span> heatmap rendered</p>
+                        <div class="et-body">
+                            <div class="et-sidebar">
+                                <span class="et-nav-label">NAVIGATION</span>
+                                <div class="et-nav-item active">Dashboard</div>
+                                <div class="et-nav-item">Interactive Map</div>
+                                <div class="et-nav-item">Pollution Analysis</div>
+                                <div class="et-nav-item">Heat Risk</div>
+                                <span class="et-nav-label" style="margin-top:8px">INTELLIGENCE</span>
+                                <div class="et-nav-item">Predictions</div>
+                                <div class="et-nav-item">AI Recommendations</div>
+                            </div>
+                            <div class="et-map">
+                                <div class="et-map-grid"></div>
+                                <div class="et-map-label">North Delhi</div>
+                                <div class="et-hotspot" style="top:30%;left:40%"></div>
+                                <div class="et-hotspot amber" style="top:55%;left:60%"></div>
+                                <div class="et-hotspot" style="top:70%;left:30%"></div>
+                            </div>
+                            <div class="et-insights">
+                                <span class="et-ins-label">AI INSIGHTS</span>
+                                <div class="et-alert amber-alert">
+                                    <span class="alert-icon">⚠</span>
+                                    <div>
+                                        <div class="alert-title">Intense Heatwave</div>
+                                        <div class="alert-desc">Temp expected to exceed 42°C in North Delhi.</div>
+                                    </div>
+                                </div>
+                                <div class="et-alert red-alert">
+                                    <span class="alert-icon">⊗</span>
+                                    <div>
+                                        <div class="alert-title">Pollution Alert</div>
+                                        <div class="alert-desc">PM2.5 rising in Industrial Zone B.</div>
+                                    </div>
+                                </div>
+                                <div class="et-metrics">
+                                    <div class="et-metric"><span class="em-val">45%</span><span class="em-key">Humidity</span></div>
+                                    <div class="et-metric"><span class="em-val">12km/h</span><span class="em-key">Wind</span></div>
+                                    <div class="et-metric"><span class="em-val amber">8.4</span><span class="em-key">UV Index</span></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </article>
@@ -125,21 +158,46 @@
                             </div>
                         </div>
                     </div>
-                    <div class="project-visual" id="visual-cf">
-                        <div class="visual-header">
-                            <span class="visual-dot red"></span>
-                            <span class="visual-dot yellow"></span>
-                            <span class="visual-dot green"></span>
-                            <span class="visual-title">analyzer.py</span>
+
+                    <!-- CF visual — three panel layout from screenshot -->
+                    <div class="project-visual cf-visual">
+                        <div class="cf-header">
+                            <span class="cf-brand">📊 CODEFORCES Analyzer</span>
                         </div>
-                        <div class="visual-body">
-                            <p class="vline"><span class="vdim">$</span> GET codeforces.com/api<span class="vblink">_</span></p>
-                            <p class="vline"><span class="vgreen">✓</span> user data fetched</p>
-                            <p class="vline vmetric">Rating <span class="vgreen">1342</span> <span class="vdim">— Pupil</span></p>
-                            <p class="vline vmetric">Solved <span class="vamber">147</span> <span class="vdim">problems</span></p>
-                            <p class="vline vmetric">Contests <span class="vgreen">23</span> <span class="vdim">entered</span></p>
-                            <p class="vline"><span class="vdim">></span> next contest in <span class="vamber">2d 4h</span></p>
-                            <p class="vline"><span class="vgreen">✓</span> dashboard ready</p>
+                        <div class="cf-panels">
+                            <div class="cf-panel">
+                                <div class="cf-panel-title">User Information</div>
+                                <div class="cf-user-info">
+                                    <div class="cf-avatar">KP</div>
+                                    <div class="cf-field"><span class="cf-key">Username:</span><span class="cf-val">Kevin114514</span></div>
+                                    <div class="cf-field"><span class="cf-key">Rank:</span><span class="cf-val red-text">Grandmaster</span></div>
+                                    <div class="cf-field"><span class="cf-key">Rating:</span><span class="cf-val">3814</span></div>
+                                    <div class="cf-field"><span class="cf-key">Max Rating:</span><span class="cf-val">3814</span></div>
+                                </div>
+                            </div>
+                            <div class="cf-panel">
+                                <div class="cf-panel-title">Question Analysis</div>
+                                <div class="cf-field"><span class="cf-key">Correct:</span><span class="cf-val green-text">1899</span></div>
+                                <div class="cf-field"><span class="cf-key">Wrong:</span><span class="cf-val red-text">3728</span></div>
+                                <div class="cf-dist-label">Rating Distribution:</div>
+                                <div class="cf-bars">
+                                    <div class="cf-bar-row"><span>800</span><div class="cf-bar-track"><div class="cf-bar-fill" style="width:45%"></div></div><span>227</span></div>
+                                    <div class="cf-bar-row"><span>1000</span><div class="cf-bar-track"><div class="cf-bar-fill" style="width:25%"></div></div><span>64</span></div>
+                                    <div class="cf-bar-row"><span>1400</span><div class="cf-bar-track"><div class="cf-bar-fill" style="width:30%"></div></div><span>67</span></div>
+                                    <div class="cf-bar-row"><span>1800</span><div class="cf-bar-track"><div class="cf-bar-fill" style="width:28%"></div></div><span>59</span></div>
+                                </div>
+                            </div>
+                            <div class="cf-panel">
+                                <div class="cf-panel-title">Contests</div>
+                                <div class="cf-field"><span class="cf-key">Total:</span><span class="cf-val">102</span></div>
+                                <div class="cf-upcoming-label">Upcoming:</div>
+                                <div class="cf-upcoming-item">Hello 2026</div>
+                                <div class="cf-upcoming-item">CF Round Div. 3</div>
+                                <div class="cf-weak-label">Weak Tags:</div>
+                                <div class="cf-weak-tags">
+                                    <span>Math</span><span>DP</span><span>Graphs</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </article>
@@ -165,21 +223,24 @@
                             </div>
                         </div>
                     </div>
-                    <div class="project-visual" id="visual-weather">
-                        <div class="visual-header">
-                            <span class="visual-dot red"></span>
-                            <span class="visual-dot yellow"></span>
-                            <span class="visual-dot green"></span>
-                            <span class="visual-title">weather.js</span>
-                        </div>
-                        <div class="visual-body">
-                            <p class="vline"><span class="vdim">$</span> city: <span class="vamber">Delhi</span><span class="vblink">_</span></p>
-                            <p class="vline"><span class="vgreen">✓</span> OpenWeather API connected</p>
-                            <p class="vline vmetric">Temp <span class="vred">38°C</span> <span class="vdim">— feels like 41°C</span></p>
-                            <p class="vline vmetric">Humidity <span class="vamber">62%</span></p>
-                            <p class="vline vmetric">Wind <span class="vgreen">14 km/h</span> <span class="vdim">NW</span></p>
-                            <p class="vline"><span class="vdim">></span> condition: <span class="vamber">Haze</span></p>
-                            <p class="vline"><span class="vgreen">✓</span> UI updated</p>
+
+                    <!-- WeatherApp visual — dark card replica from screenshot -->
+                    <div class="project-visual weather-visual">
+                        <div class="w-card">
+                            <div class="w-search-row">
+                                <div class="w-search-bar"></div>
+                                <div class="w-search-btn">🔍</div>
+                            </div>
+                            <div class="w-city">Weather in Delhi, National Capital Territory of India</div>
+                            <div class="w-temp">26°C</div>
+                            <div class="w-condition">
+                                <span class="w-icon">⛈️</span>
+                                <span class="w-cond-text">Thunderstorm</span>
+                            </div>
+                            <div class="w-details">
+                                <div class="w-detail">Humidity: <strong>95%</strong></div>
+                                <div class="w-detail">Wind Speed: <strong>8 km/hr</strong></div>
+                            </div>
                         </div>
                     </div>
                 </article>
@@ -210,10 +271,8 @@
             <p class="section-label">> writing/</p>
             <article class="writing-card">
                 <h3>What I built, what broke, and what I'd do differently</h3>
-                <p>
-                    A reflection on EcoTwin — the problem I was trying to solve, the three times
-                    I nearly gave up, and the one thing I'd change if I started over.
-                </p>
+                <p>A reflection on EcoTwin — the problem I was trying to solve, the three times
+                I nearly gave up, and the one thing I'd change if I started over.</p>
                 <a href="#" class="read-link">read it →</a>
             </article>
         </section>
