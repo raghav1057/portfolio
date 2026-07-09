@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What I Built, What Broke — Raghav Pant</title>
+    <!--<meta name="description" content="A reflection on building EcoTwin at Hack4impact. What broke, what I learned, and what I'd do differently."/>-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        :root {
+          --bg: #0f0f0f;
+          --border: #2a2a2a;
+          --green: #b8f94a;
+          --text: #e8e8e0;
+          --text-muted: #888888;
+          --text-dim: #555555;
+          --font-main: 'Space Grotesk', sans-serif;
+          --font-mono: 'JetBrains Mono', monospace;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html { scroll-behavior: smooth; }
+        
+        body {
+          background-color: var(--bg);
+          color: var(--text);
+          font-family: var(--font-main);
+          font-size: 16px;
+          line-height: 1.8;
+          background-image: repeating-linear-gradient(
+            0deg, transparent, transparent 2px,
+            rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px
+          );
+        }
+        
+        a { text-decoration: none; color: var(--green); }
+        a:hover { text-decoration: underline; }
+        
+        nav {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 1.25rem 2rem;
+          border-bottom: 1px solid var(--border);
+          max-width: 900px;
+          margin: 0 auto;
+        }
+        
+        .nav-logo { font-family: var(--font-mono); font-size: 14px; color: var(--green); letter-spacing: 0.05em; }
+        .nav-back { font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); }
+        .nav-back:hover { color: var(--green); }
+        
+        .blog-container {
+          max-width: 720px;
+          margin: 0 auto;
+          padding: 4rem 2rem;
+        }
+        
+        h1 {
+          font-size: 36px;
+          font-weight: 700;
+          margin-bottom: 0.5rem;
+          line-height: 1.2;
+        }
+        
+        .blog-date {
+          font-family: var(--font-mono);
+          font-size: 12px;
+          color: var(--text-dim);
+          margin-bottom: 2rem;
+          display: block;
+        }
+        
+        h2 {
+          font-size: 20px;
+          font-weight: 600;
+          margin: 2rem 0 1rem;
+          color: var(--text);
+        }
+        
+        p { margin-bottom: 1.2rem; color: var(--text-muted); }
+        
+        strong { color: var(--text); font-weight: 600; }
+        
+        em { color: var(--green); font-style: italic; }
+        
+        ul, ol {
+          margin: 1.5rem 0 1.5rem 1.5rem;
+          color: var(--text-muted);
+        }
+        
+        li { margin-bottom: 0.8rem; line-height: 1.7; }
+        
+        blockquote {
+          border-left: 2px solid var(--green);
+          padding-left: 1rem;
+          margin: 1.5rem 0;
+          color: var(--text-dim);
+          font-style: italic;
+        }
+        
+        .blog-footer {
+          margin-top: 3rem;
+          padding-top: 2rem;
+          border-top: 1px solid var(--border);
+          font-size: 13px;
+          color: var(--text-dim);
+        }
+        
+        .blog-footer em { color: var(--green); font-style: italic; }
+        
+        @media (max-width: 768px) {
+          nav { padding: 1rem; }
+          .blog-container { padding: 2rem 1.25rem; }
+          h1 { font-size: 28px; }
+          h2 { font-size: 18px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-logo">RP.dev</div>
+        <a href="/" class="nav-back">← back to portfolio</a>
+    </nav>
+
+    <article class="blog-container">
+        <h1>What I Built, What Broke, and What I'd Do Differently</h1>
+        <span class="blog-date">On building EcoTwin at Hack4impact</span>
+
+        <h2>The Problem</h2>
+        
+        <p>Picture this: it's monsoon season in Delhi. The air quality is absolutely abysmal. People are posting health updates like weather forecasts. And here I am, a 4th year CS student thinking — <em>"what if we could actually predict this stuff instead of just complaining about it?"</em></p>
+        
+        <p>So I decided to build EcoTwin at Hack4impact. Spoiler alert: biting off more than you can chew in a 24-hour hackathon is a rite of passage.</p>
+
+        <h2>What Actually Happened</h2>
+        
+        <p>The goal was simple-ish: grab live air quality data from NASA and OpenAQ, train an ML model to forecast AQI for the next 24 hours, and visualize pollution hotspots on a map. On paper, genius. In practice? Chaos wrapped in Python.</p>
+        
+        <p><strong>The first breaking point</strong> — the APIs weren't returning data the way I expected. Classic rookie mistake of assuming documentation matches reality. Spent 3 hours debugging what turned out to be a single missing field in the JSON response. Could've screamed. Didn't. (Barely.)</p>
+        
+        <p><strong>The second breaking point</strong> — XGBoost was overfitting like crazy. The model was 99% accurate on training data, 40% accurate on real data. Turns out feeding it 6 months of Delhi pollution data and expecting it to generalize forever doesn't work. Who knew? (Everyone. Everyone knew.)</p>
+        
+        <p><strong>The third breaking point</strong> — deploying FastAPI on a limited hackathon environment while also building the frontend and UI was like juggling while riding a unicycle. I crashed. Multiple times. But somehow it worked on demo day.</p>
+
+        <h2>What I'd Change</h2>
+        
+        <p>If I could go back, I'd do three things differently:</p>
+        
+        <ol>
+          <li><strong>Start with bad data, not perfect data.</strong> Spend less time on the model, more time making sure the pipeline is bulletproof. A model that's 70% accurate but actually works beats 95% accurate code that breaks in production.</li>
+          
+          <li><strong>Make the UI first.</strong> Seriously. I built the dashboard last and realized halfway through that the insights I was showing didn't make sense. Knowing what you're visualizing before you build it saves hours.</li>
+          
+          <li><strong>Stop trying to be clever.</strong> I overengineered half the features. Sometimes a simple heatmap beats fancy predictions. Simple > impressive.</li>
+        </ol>
+
+        <h2>The Real Lesson</h2>
+        
+        <p>EcoTwin taught me that building something real is messier than tutorials make it seem. But that mess is where you actually learn. The bugs, the 2 AM debugging sessions, the <em>"wait this should work why doesn't it work"</em> moments — that's the actual education.</p>
+        
+        <p>Also learned that competitive programmers aren't the only ones who need dashboards. People actually want to know if their neighborhood is gonna be unbreathable tomorrow.</p>
+        
+        <p>Would I do it again? Yeah. Would I yell at my code less? Probably not.</p>
+
+        <div class="blog-footer">
+            Built at <strong>Hack4impact</strong>. Currently 87% accurate on historical data. <em>Still improving.</em>
+        </div>
+    </article>
+
+</body>
+</html>
