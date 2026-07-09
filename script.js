@@ -1,11 +1,13 @@
 // TYPEWRITER EFFECT
 const phrases = [
   "building things. sometimes they even work.",
+  "powered by curiosity and bad wifi.",
   "Googling first, panicking second.",
-  "making APIs do the heavy lifting.",
-  "learning in public, cringing in private.",
-  "powered by curiosity and bad wifi."
+  "Learning by day, building by night."
 ];
+
+// "making APIs do the heavy lifting.",
+//"learning in public, cringing in private."
 
 const el = document.getElementById("typewriter-text");
 let phraseIndex = 0, charIndex = 0, isDeleting = false;
