@@ -835,95 +835,85 @@ a.nav-logo:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.25rem;
+  gap: 1rem;
 }
 
-/* perspective container — viewer is 700px away */
 .deck-scene {
-  width: 300px;
-  height: 260px;
-  perspective: 700px;
-  perspective-origin: 50% 30%;
-  cursor: crosshair;
+  width: 280px;
+  height: 300px;
+  perspective: 600px;
+  perspective-origin: 60% 20%;
+  cursor: none;
   position: relative;
+  overflow: visible;
 }
 
-/* the parent that holds the isometric tilt */
+/* isometric tilt — exactly like Linear's figure */
 .deck-stack {
   width: 100%;
   height: 100%;
   position: relative;
   transform-style: preserve-3d;
-  /* flat horizontal stack — rotateX tilts it away like Linear */
-  transform: rotateX(52deg) rotateZ(-20deg);
+  transform: rotateX(58deg) rotateY(0deg) rotateZ(-30deg);
 }
 
-/* each card — stacked flat, offset slightly in Z */
 .skill-card {
   position: absolute;
-  width: 220px;
-  height: 130px;
+  width: 200px;
+  height: 120px;
   left: 50%;
   top: 50%;
-  margin-left: -110px;
-  margin-top: -65px;
-
-  background: #111;
-  border: 1px solid #262626;
-  border-radius: 10px;
-  padding: 1rem 1.25rem;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-
-  /* JS sets transform per card */
+  margin-left: -100px;
+  margin-top: -60px;
+  background: #0f0f0f;
+  border: 1px solid #2e2e2e;
+  border-radius: 8px;
   will-change: transform;
-  transition: border-color 0.3s;
+  overflow: hidden;
 }
 
-/* green line on top of each card */
-.skill-card::before {
-  content: '';
+/* name label shown on each card */
+.skill-card::after {
+  content: attr(data-name);
   position: absolute;
-  top: 0; left: 16px; right: 16px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(184,249,74,0.4), transparent);
-}
-
-/* active/pulled card gets brighter border and accent */
-.skill-card.is-active {
-  border-color: #3a3a3a;
-}
-
-.skill-card.is-active::before {
-  background: linear-gradient(90deg, transparent, var(--green), transparent);
-}
-
-.sc-name {
+  bottom: 14px;
+  left: 16px;
   font-family: var(--font-mono);
-  font-size: 16px;
+  font-size: 13px;
   font-weight: 500;
   color: var(--text);
   letter-spacing: -0.01em;
 }
 
-.sc-cat {
+/* category label */
+.skill-card::before {
+  content: attr(data-cat);
+  position: absolute;
+  top: 14px;
+  left: 16px;
   font-family: var(--font-mono);
   font-size: 9px;
   color: var(--text-dim);
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
 }
 
-.learning-card .sc-name { color: var(--text-muted); }
-.learning-card .sc-cat  { color: var(--amber); }
-.learning-card::before {
-  background: linear-gradient(90deg, transparent, rgba(245,166,35,0.4), transparent);
+/* top edge accent line using box-shadow */
+.skill-card {
+  box-shadow: inset 0 1px 0 rgba(184,249,74,0.15);
 }
-.learning-card.is-active::before {
-  background: linear-gradient(90deg, transparent, var(--amber), transparent);
+
+.skill-card.is-top {
+  border-color: #383838;
+  box-shadow: inset 0 1px 0 rgba(184,249,74,0.5);
 }
+
+.skill-card.is-top::after { color: #fff; }
+
+.learning-card::after { color: var(--text-muted); }
+.learning-card::before { color: var(--amber); }
+.learning-card { box-shadow: inset 0 1px 0 rgba(245,166,35,0.15); }
+.learning-card.is-top { box-shadow: inset 0 1px 0 rgba(245,166,35,0.5); }
 
 .deck-hint {
   font-family: var(--font-mono);

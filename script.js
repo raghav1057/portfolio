@@ -100,7 +100,9 @@ document.addEventListener("visibilitychange", () => {
 });
 
 
-// 3D SKILL CARD DECK — Linear style, cursor pulls active card out
+// 3D SKILL CARD DECK — Linear style
+// Cards stacked flat. Cursor Y position controls how many slide up.
+// Moving cursor from bottom to top progressively lifts each card.
 (function() {
   const scene = document.getElementById("deckScene");
   const stack = document.getElementById("deckStack");
@@ -109,64 +111,57 @@ document.addEventListener("visibilitychange", () => {
   const cards = Array.from(stack.querySelectorAll(".skill-card"));
   const N = cards.length;
 
-  // z-index so card 0 renders on top
-  cards.forEach((card, i) => { card.style.zIndex = N - i; });
+  // spacing between cards in the stack (Z axis)
+  const GAP = 9;
+  // how far each card slides up when revealed (Y axis in 3D space)
+  const LIFT = 90;
 
-  // gap between stacked cards (px in Z axis)
-  const STACK_GAP = 10;
-  // how far active card pulls out toward viewer
-  const PULL_Z    = 55;
-  const PULL_Y    = -18;
+  // smooth reveal counter — 0 means all stacked, N means all lifted
+  let reveal = 0;
+  let targetReveal = 0;
+  let isInside = false;
 
-  // which card index is active (-1 = none)
-  let activeIndex    = -1;
-  let curActive      = -1; // smooth float version
-  let isInside       = false;
-
-  // set all cards to their base stacked positions
-  function setPositions(active) {
+  function place(reveal) {
     cards.forEach((card, i) => {
-      const baseZ = -i * STACK_GAP;
+      // i=0 is the TOP card (Python), i=N-1 is bottom
+      const stackZ = (N - 1 - i) * -GAP; // base stack depth
 
-      if (Math.abs(i - active) < 0.5) {
-        // this card is the active one — pull it out
-        const t = 1 - Math.abs(i - active) * 2;
-        const pullZ = baseZ + PULL_Z * t;
-        const pullY = PULL_Y * t;
-        card.style.transform = `translateZ(${pullZ}px) translateY(${pullY}px)`;
-        card.classList.add("is-active");
-      } else {
-        card.style.transform = `translateZ(${baseZ}px) translateY(0px)`;
-        card.classList.remove("is-active");
-      }
+      // how much this card has been lifted
+      // card i lifts when reveal > (N-1-i)
+      const liftAmount = Math.max(0, Math.min(1, reveal - (N - 1 - i)));
+      const liftY = -liftAmount * LIFT;
+
+      card.style.transform = `translateZ(${stackZ}px) translateY(${liftY}px)`;
+      card.style.zIndex = N - i;
+
+      // mark the current "top visible" card
+      const isTop = Math.round(reveal) === (N - 1 - i) || (reveal < 0.5 && i === 0);
+      card.classList.toggle("is-top", i === 0 && reveal < 0.5 || liftAmount > 0 && liftAmount < 1);
     });
   }
 
-  setPositions(-1);
+  place(0);
 
-  scene.addEventListener("mouseenter", () => {
-    isInside = true;
-    activeIndex = 0; // start with first card
-  });
+  scene.addEventListener("mouseenter", () => { isInside = true; });
 
   scene.addEventListener("mouseleave", () => {
     isInside = false;
-    activeIndex = -1;
+    targetReveal = 0;
   });
 
   scene.addEventListener("mousemove", (e) => {
     const r = scene.getBoundingClientRect();
-    // map cursor X across the scene to card index 0 → N-1
-    const nx = (e.clientX - r.left) / r.width;
-    activeIndex = Math.min(Math.floor(nx * N), N - 1);
+    // cursor from bottom=0 to top=1
+    const ny = 1 - (e.clientY - r.top) / r.height;
+    // map to 0 → N-1 cards revealed
+    targetReveal = ny * (N - 1);
   });
 
   function lerp(a, b, t) { return a + (b - a) * t; }
 
   function tick() {
-    const target = isInside ? activeIndex : -1;
-    curActive = lerp(curActive, target, 0.12);
-    setPositions(curActive);
+    reveal = lerp(reveal, isInside ? targetReveal : 0, 0.1);
+    place(reveal);
     requestAnimationFrame(tick);
   }
 

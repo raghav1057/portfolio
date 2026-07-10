@@ -254,7 +254,6 @@
             <p class="section-label">> skills.log</p>
             <div class="skills-layout">
 
-                <!-- LEFT — pill list for context, hidden on mobile when deck shows -->
                 <div class="skills-pills-col">
                     <div class="skills-group">
                         <p class="skills-sublabel">know it</p>
@@ -271,22 +270,21 @@
                     </div>
                 </div>
 
-                <!-- RIGHT — 3D interactive card deck -->
                 <div class="skills-deck-col">
                     <div class="deck-scene" id="deckScene">
                         <div class="deck-stack" id="deckStack">
-                            <div class="skill-card" style="--i:0"  data-cat="language">  <span class="sc-name">Python</span>     <span class="sc-cat">language</span>  </div>
-                            <div class="skill-card" style="--i:1"  data-cat="frontend">  <span class="sc-name">JavaScript</span> <span class="sc-cat">language</span>  </div>
-                            <div class="skill-card" style="--i:2"  data-cat="frontend">  <span class="sc-name">HTML</span>       <span class="sc-cat">frontend</span>  </div>
-                            <div class="skill-card" style="--i:3"  data-cat="frontend">  <span class="sc-name">CSS</span>        <span class="sc-cat">frontend</span>  </div>
-                            <div class="skill-card" style="--i:4"  data-cat="backend">   <span class="sc-name">Flask</span>      <span class="sc-cat">backend</span>   </div>
-                            <div class="skill-card" style="--i:5"  data-cat="backend">   <span class="sc-name">FastAPI</span>    <span class="sc-cat">backend</span>   </div>
-                            <div class="skill-card" style="--i:6"  data-cat="database">  <span class="sc-name">PostgreSQL</span> <span class="sc-cat">database</span>  </div>
-                            <div class="skill-card" style="--i:7"  data-cat="tool">      <span class="sc-name">Git</span>        <span class="sc-cat">tool</span>      </div>
-                            <div class="skill-card" style="--i:8"  data-cat="backend">   <span class="sc-name">REST APIs</span>  <span class="sc-cat">backend</span>   </div>
-                            <div class="skill-card learning-card" style="--i:9"  data-cat="learning"> <span class="sc-name">React</span>      <span class="sc-cat">learning</span> </div>
-                            <div class="skill-card learning-card" style="--i:10" data-cat="learning"> <span class="sc-name">Docker</span>     <span class="sc-cat">learning</span> </div>
-                            <div class="skill-card learning-card" style="--i:11" data-cat="learning"> <span class="sc-name">ML</span>         <span class="sc-cat">learning</span> </div>
+                            <div class="skill-card" data-name="Python"      data-cat="language"></div>
+                            <div class="skill-card" data-name="JavaScript"  data-cat="language"></div>
+                            <div class="skill-card" data-name="HTML"        data-cat="frontend"></div>
+                            <div class="skill-card" data-name="CSS"         data-cat="frontend"></div>
+                            <div class="skill-card" data-name="Flask"       data-cat="backend"></div>
+                            <div class="skill-card" data-name="FastAPI"     data-cat="backend"></div>
+                            <div class="skill-card" data-name="PostgreSQL"  data-cat="database"></div>
+                            <div class="skill-card" data-name="Git"         data-cat="tool"></div>
+                            <div class="skill-card" data-name="REST APIs"   data-cat="backend"></div>
+                            <div class="skill-card learning-card" data-name="React"  data-cat="learning"></div>
+                            <div class="skill-card learning-card" data-name="Docker" data-cat="learning"></div>
+                            <div class="skill-card learning-card" data-name="ML"     data-cat="learning"></div>
                         </div>
                     </div>
                     <p class="deck-hint">move cursor over deck</p>
