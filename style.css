@@ -876,7 +876,6 @@ a.nav-logo:hover {
   flex-direction: column;
   justify-content: space-between;
 
-  /* JS overrides transform per card */
   transition: border-color 0.2s;
   will-change: transform;
 }

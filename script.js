@@ -100,7 +100,7 @@ document.addEventListener("visibilitychange", () => {
 });
 
 
-// 3D SKILL CARD DECK — Linear-style fanning with cursor
+// 3D SKILL CARD DECK
 (function() {
   const scene = document.getElementById("deckScene");
   const stack = document.getElementById("deckStack");
@@ -109,90 +109,64 @@ document.addEventListener("visibilitychange", () => {
   const cards = Array.from(stack.querySelectorAll(".skill-card"));
   const N = cards.length;
 
-  // base isometric rotation of the whole stack
-  const BASE_RX = 14;
-  const BASE_RY = -20;
-  const BASE_RZ = 2;
+  // set z-index so first card is always on top visually
+  cards.forEach((card, i) => {
+    card.style.zIndex = N - i;
+  });
 
-  // how far cards spread along each axis as cursor moves
-  const SPREAD_Z  = 22;   // depth spread between cards (px)
-  const SPREAD_X  = 9;    // vertical offset between cards (px)
-  const TILT_MAX  = 18;   // max tilt of whole stack (deg)
+  const BASE_RX = 22;
+  const BASE_RY = -28;
+  const BASE_RZ = 3;
 
-  let curX = BASE_RX, curY = BASE_RY;
-  let tgtX = BASE_RX, tgtY = BASE_RY;
-  // fan progress: 0 = collapsed stack, 1 = fully fanned
-  let fanProgress = 0;
-  let tgtFan = 0;
-  let isInside = false;
+  let curRX = BASE_RX, curRY = BASE_RY;
+  let tgtRX = BASE_RX, tgtRY = BASE_RY;
+  let fan = 0, tgtFan = 0;
+  let nx = 0, ny = 0;
 
-  // set initial collapsed positions
-  function setCardTransforms(fan, nx, ny) {
+  function applyCards(fan, nx, ny) {
     cards.forEach((card, i) => {
-      // reverse index so top card (i=0) is front
-      const rev = N - 1 - i;
+      // i=0 is front/top card, i=N-1 is back
+      const depth  = i * (-16 - fan * 18);         // cards push back as fan opens
+      const offsetY = i * (6 + fan * 14);           // cards spread downward
+      const offsetX = i * fan * nx * 20;            // spread left/right with cursor
+      const cardRY  = i * fan * nx * -4;            // each card rotates slightly
 
-      // base stacked offset — cards sit slightly behind each other
-      const baseZ = rev * -14;
-      const baseY = rev * 8;
-
-      // fanned offset — cursor position fans cards out in Z and Y
-      // nx/ny are -0.5 to +0.5 normalised cursor position
-      const fanZ  = rev * SPREAD_Z  * fan;
-      const fanY  = rev * SPREAD_X  * fan * (ny + 0.3);
-      const fanRY = rev * 3.5       * fan * nx;
-
-      const z = baseZ - fanZ;
-      const y = baseY - fanY;
-
-      card.style.transform = `translateY(${y}px) translateZ(${z}px) rotateY(${fanRY}deg)`;
+      card.style.transform =
+        `translateX(${offsetX}px) translateY(${offsetY}px) translateZ(${depth}px) rotateY(${cardRY}deg)`;
     });
   }
 
-  // start with collapsed stack
-  setCardTransforms(0, 0, 0);
+  applyCards(0, 0, 0);
 
-  let mouseNX = 0, mouseNY = 0;
-
-  scene.addEventListener("mouseenter", () => {
-    tgtFan = 1;
-    isInside = true;
-  });
-
+  scene.addEventListener("mouseenter", () => { tgtFan = 1; });
   scene.addEventListener("mouseleave", () => {
     tgtFan = 0;
-    tgtX = BASE_RX;
-    tgtY = BASE_RY;
-    isInside = false;
+    tgtRX = BASE_RX;
+    tgtRY = BASE_RY;
+    nx = 0; ny = 0;
   });
 
   scene.addEventListener("mousemove", (e) => {
     const r = scene.getBoundingClientRect();
-    mouseNX = (e.clientX - r.left)  / r.width  - 0.5;   // -0.5 to +0.5
-    mouseNY = (e.clientY - r.top)   / r.height - 0.5;
-
-    // tilt whole stack based on cursor
-    tgtY = BASE_RY + mouseNX * TILT_MAX * 2;
-    tgtX = BASE_RX - mouseNY * TILT_MAX;
+    nx = (e.clientX - r.left)  / r.width  - 0.5;
+    ny = (e.clientY - r.top)   / r.height - 0.5;
+    tgtRY = BASE_RY + nx * 30;
+    tgtRX = BASE_RX - ny * 20;
   });
 
   function lerp(a, b, t) { return a + (b - a) * t; }
 
-  function animate() {
-    // smoothly chase targets
-    curX       = lerp(curX,       tgtX,   0.07);
-    curY       = lerp(curY,       tgtY,   0.07);
-    fanProgress = lerp(fanProgress, tgtFan, 0.06);
+  function tick() {
+    curRX = lerp(curRX, tgtRX, 0.08);
+    curRY = lerp(curRY, tgtRY, 0.08);
+    fan   = lerp(fan,   tgtFan, 0.07);
 
-    // apply whole-stack rotation
     stack.style.transform =
-      `rotateX(${curX}deg) rotateY(${curY}deg) rotateZ(${BASE_RZ}deg)`;
+      `rotateX(${curRX}deg) rotateY(${curRY}deg) rotateZ(${BASE_RZ}deg)`;
 
-    // apply per-card fanning
-    setCardTransforms(fanProgress, mouseNX, mouseNY);
-
-    requestAnimationFrame(animate);
+    applyCards(fan, nx, ny);
+    requestAnimationFrame(tick);
   }
 
-  animate();
+  tick();
 })();
