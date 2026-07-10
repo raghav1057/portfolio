@@ -820,3 +820,125 @@ a.nav-logo {
 a.nav-logo:hover {
   color: var(--green);
 }
+
+
+/* ============================================================
+   SKILLS — 3D CARD DECK
+   ============================================================ */
+
+.skills-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.skills-pills-col { display: flex; flex-direction: column; gap: 0; }
+
+/* DECK SCENE — sets up 3D perspective space */
+.skills-deck-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.deck-scene {
+  width: 260px;
+  height: 320px;
+  perspective: 800px;       /* distance from viewer to z=0 plane */
+  perspective-origin: 50% 40%;
+  cursor: grab;
+}
+
+.deck-scene:active { cursor: grabbing; }
+
+/* STACK — the element that rotates in 3D */
+.deck-stack {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;  /* children exist in 3D space */
+  transform: rotateX(20deg) rotateY(-20deg);
+  transition: transform 0.1s ease-out;
+}
+
+/* INDIVIDUAL CARDS */
+.skill-card {
+  position: absolute;
+  width: 200px;
+  height: 120px;
+  left: 50%;
+  top: 50%;
+
+  /* each card offset down and back using CSS variable --i */
+  transform: translateX(-50%) translateY(calc(-50% + var(--i) * 10px)) translateZ(calc(var(--i) * -12px));
+
+  background: #141414;
+  border: 1px solid #2a2a2a;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  transition: transform 0.15s ease, border-color 0.2s;
+}
+
+/* green accent line at top of each card */
+.skill-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 1rem; right: 1rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--green), transparent);
+  opacity: 0.4;
+}
+
+/* top card gets full opacity accent */
+.skill-card:first-child::before { opacity: 1; }
+.skill-card:first-child { border-color: #3a3a3a; }
+
+.sc-name {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+
+.sc-cat {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* learning cards get amber accent */
+.learning-card::before {
+  background: linear-gradient(90deg, transparent, var(--amber), transparent);
+  opacity: 0.5;
+}
+
+.learning-card .sc-name { color: var(--text-muted); }
+.learning-card .sc-cat  { color: var(--amber); }
+
+.deck-hint {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-dim);
+  letter-spacing: 0.06em;
+  animation: pulse-hint 2s ease-in-out infinite;
+}
+
+@keyframes pulse-hint {
+  0%, 100% { opacity: 0.4; }
+  50%       { opacity: 0.8; }
+}
+
+/* mobile — hide deck, show pills normally */
+@media (max-width: 768px) {
+  .skills-layout { grid-template-columns: 1fr; }
+  .skills-deck-col { display: none; }
+}
