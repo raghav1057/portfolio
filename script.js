@@ -100,7 +100,7 @@ document.addEventListener("visibilitychange", () => {
 });
 
 
-// 3D SKILL CARD DECK
+// 3D SKILL CARD DECK — Linear style, cursor pulls active card out
 (function() {
   const scene = document.getElementById("deckScene");
   const stack = document.getElementById("deckStack");
@@ -109,62 +109,64 @@ document.addEventListener("visibilitychange", () => {
   const cards = Array.from(stack.querySelectorAll(".skill-card"));
   const N = cards.length;
 
-  // set z-index so first card is always on top visually
-  cards.forEach((card, i) => {
-    card.style.zIndex = N - i;
-  });
+  // z-index so card 0 renders on top
+  cards.forEach((card, i) => { card.style.zIndex = N - i; });
 
-  const BASE_RX = 22;
-  const BASE_RY = -28;
-  const BASE_RZ = 3;
+  // gap between stacked cards (px in Z axis)
+  const STACK_GAP = 10;
+  // how far active card pulls out toward viewer
+  const PULL_Z    = 55;
+  const PULL_Y    = -18;
 
-  let curRX = BASE_RX, curRY = BASE_RY;
-  let tgtRX = BASE_RX, tgtRY = BASE_RY;
-  let fan = 0, tgtFan = 0;
-  let nx = 0, ny = 0;
+  // which card index is active (-1 = none)
+  let activeIndex    = -1;
+  let curActive      = -1; // smooth float version
+  let isInside       = false;
 
-  function applyCards(fan, nx, ny) {
+  // set all cards to their base stacked positions
+  function setPositions(active) {
     cards.forEach((card, i) => {
-      // i=0 is front/top card, i=N-1 is back
-      const depth  = i * (-16 - fan * 18);         // cards push back as fan opens
-      const offsetY = i * (6 + fan * 14);           // cards spread downward
-      const offsetX = i * fan * nx * 20;            // spread left/right with cursor
-      const cardRY  = i * fan * nx * -4;            // each card rotates slightly
+      const baseZ = -i * STACK_GAP;
 
-      card.style.transform =
-        `translateX(${offsetX}px) translateY(${offsetY}px) translateZ(${depth}px) rotateY(${cardRY}deg)`;
+      if (Math.abs(i - active) < 0.5) {
+        // this card is the active one — pull it out
+        const t = 1 - Math.abs(i - active) * 2;
+        const pullZ = baseZ + PULL_Z * t;
+        const pullY = PULL_Y * t;
+        card.style.transform = `translateZ(${pullZ}px) translateY(${pullY}px)`;
+        card.classList.add("is-active");
+      } else {
+        card.style.transform = `translateZ(${baseZ}px) translateY(0px)`;
+        card.classList.remove("is-active");
+      }
     });
   }
 
-  applyCards(0, 0, 0);
+  setPositions(-1);
 
-  scene.addEventListener("mouseenter", () => { tgtFan = 1; });
+  scene.addEventListener("mouseenter", () => {
+    isInside = true;
+    activeIndex = 0; // start with first card
+  });
+
   scene.addEventListener("mouseleave", () => {
-    tgtFan = 0;
-    tgtRX = BASE_RX;
-    tgtRY = BASE_RY;
-    nx = 0; ny = 0;
+    isInside = false;
+    activeIndex = -1;
   });
 
   scene.addEventListener("mousemove", (e) => {
     const r = scene.getBoundingClientRect();
-    nx = (e.clientX - r.left)  / r.width  - 0.5;
-    ny = (e.clientY - r.top)   / r.height - 0.5;
-    tgtRY = BASE_RY + nx * 30;
-    tgtRX = BASE_RX - ny * 20;
+    // map cursor X across the scene to card index 0 → N-1
+    const nx = (e.clientX - r.left) / r.width;
+    activeIndex = Math.min(Math.floor(nx * N), N - 1);
   });
 
   function lerp(a, b, t) { return a + (b - a) * t; }
 
   function tick() {
-    curRX = lerp(curRX, tgtRX, 0.08);
-    curRY = lerp(curRY, tgtRY, 0.08);
-    fan   = lerp(fan,   tgtFan, 0.07);
-
-    stack.style.transform =
-      `rotateX(${curRX}deg) rotateY(${curRY}deg) rotateZ(${BASE_RZ}deg)`;
-
-    applyCards(fan, nx, ny);
+    const target = isInside ? activeIndex : -1;
+    curActive = lerp(curActive, target, 0.12);
+    setPositions(curActive);
     requestAnimationFrame(tick);
   }
 
