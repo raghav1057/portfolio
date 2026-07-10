@@ -782,3 +782,41 @@ section.visible, article.visible { opacity: 1; transform: translateY(0); }
   transform: translateY(-3px) scale(1.012);
   background: #151515;
 }
+
+/* RP LOGO — hollow outline, fills on hover */
+.nav-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.rp-logo {
+  width: 48px;
+  height: 28px;
+  overflow: visible;
+}
+
+.rp-text {
+  transition: fill 0.3s ease, stroke 0.3s ease;
+}
+
+.nav-logo:hover .rp-text {
+  fill: #b8f94a;
+  stroke: #b8f94a;
+}
+
+/* RP LOGO — text with hollow stroke effect */
+a.nav-logo {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--green);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a.nav-logo:hover {
+  color: var(--green);
+}
