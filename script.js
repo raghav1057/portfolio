@@ -100,54 +100,99 @@ document.addEventListener("visibilitychange", () => {
 });
 
 
-// 3D SKILL CARD DECK — follows cursor movement
-const deckScene = document.getElementById("deckScene");
-const deckStack = document.getElementById("deckStack");
+// 3D SKILL CARD DECK — Linear-style fanning with cursor
+(function() {
+  const scene = document.getElementById("deckScene");
+  const stack = document.getElementById("deckStack");
+  if (!scene || !stack) return;
 
-if (deckScene && deckStack) {
-  // base rotation so deck looks isometric by default
-  let baseX = 20;
-  let baseY = -20;
+  const cards = Array.from(stack.querySelectorAll(".skill-card"));
+  const N = cards.length;
 
-  // current and target rotation — we lerp between them for smoothness
-  let currentX = baseX;
-  let currentY = baseY;
-  let targetX  = baseX;
-  let targetY  = baseY;
+  // base isometric rotation of the whole stack
+  const BASE_RX = 14;
+  const BASE_RY = -20;
+  const BASE_RZ = 2;
 
-  // track if mouse is over the scene
-  let isHovered = false;
+  // how far cards spread along each axis as cursor moves
+  const SPREAD_Z  = 22;   // depth spread between cards (px)
+  const SPREAD_X  = 9;    // vertical offset between cards (px)
+  const TILT_MAX  = 18;   // max tilt of whole stack (deg)
 
-  deckScene.addEventListener("mousemove", (e) => {
-    const rect = deckScene.getBoundingClientRect();
+  let curX = BASE_RX, curY = BASE_RY;
+  let tgtX = BASE_RX, tgtY = BASE_RY;
+  // fan progress: 0 = collapsed stack, 1 = fully fanned
+  let fanProgress = 0;
+  let tgtFan = 0;
+  let isInside = false;
 
-    // normalise mouse position to -1 → +1 range within the element
-    const nx = (e.clientX - rect.left)  / rect.width  - 0.5;
-    const ny = (e.clientY - rect.top)   / rect.height - 0.5;
+  // set initial collapsed positions
+  function setCardTransforms(fan, nx, ny) {
+    cards.forEach((card, i) => {
+      // reverse index so top card (i=0) is front
+      const rev = N - 1 - i;
 
-    // map to rotation degrees — max ±20deg tilt
-    targetY = baseY + nx * 40;
-    targetX = baseX - ny * 30;
-    isHovered = true;
-  });
+      // base stacked offset — cards sit slightly behind each other
+      const baseZ = rev * -14;
+      const baseY = rev * 8;
 
-  deckScene.addEventListener("mouseleave", () => {
-    // return to base rotation when cursor leaves
-    targetX = baseX;
-    targetY = baseY;
-    isHovered = false;
-  });
+      // fanned offset — cursor position fans cards out in Z and Y
+      // nx/ny are -0.5 to +0.5 normalised cursor position
+      const fanZ  = rev * SPREAD_Z  * fan;
+      const fanY  = rev * SPREAD_X  * fan * (ny + 0.3);
+      const fanRY = rev * 3.5       * fan * nx;
 
-  // animation loop — lerp current toward target every frame
-  // lerp = linear interpolation: move 8% of the remaining distance each frame
-  // this creates smooth easing without any library
-  function animateDeck() {
-    currentX += (targetX - currentX) * 0.08;
-    currentY += (targetY - currentY) * 0.08;
+      const z = baseZ - fanZ;
+      const y = baseY - fanY;
 
-    deckStack.style.transform = `rotateX(${currentX}deg) rotateY(${currentY}deg)`;
-    requestAnimationFrame(animateDeck);
+      card.style.transform = `translateY(${y}px) translateZ(${z}px) rotateY(${fanRY}deg)`;
+    });
   }
 
-  animateDeck();
-}
+  // start with collapsed stack
+  setCardTransforms(0, 0, 0);
+
+  let mouseNX = 0, mouseNY = 0;
+
+  scene.addEventListener("mouseenter", () => {
+    tgtFan = 1;
+    isInside = true;
+  });
+
+  scene.addEventListener("mouseleave", () => {
+    tgtFan = 0;
+    tgtX = BASE_RX;
+    tgtY = BASE_RY;
+    isInside = false;
+  });
+
+  scene.addEventListener("mousemove", (e) => {
+    const r = scene.getBoundingClientRect();
+    mouseNX = (e.clientX - r.left)  / r.width  - 0.5;   // -0.5 to +0.5
+    mouseNY = (e.clientY - r.top)   / r.height - 0.5;
+
+    // tilt whole stack based on cursor
+    tgtY = BASE_RY + mouseNX * TILT_MAX * 2;
+    tgtX = BASE_RX - mouseNY * TILT_MAX;
+  });
+
+  function lerp(a, b, t) { return a + (b - a) * t; }
+
+  function animate() {
+    // smoothly chase targets
+    curX       = lerp(curX,       tgtX,   0.07);
+    curY       = lerp(curY,       tgtY,   0.07);
+    fanProgress = lerp(fanProgress, tgtFan, 0.06);
+
+    // apply whole-stack rotation
+    stack.style.transform =
+      `rotateX(${curX}deg) rotateY(${curY}deg) rotateZ(${BASE_RZ}deg)`;
+
+    // apply per-card fanning
+    setCardTransforms(fanProgress, mouseNX, mouseNY);
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+})();
