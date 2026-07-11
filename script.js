@@ -101,12 +101,14 @@ document.addEventListener("visibilitychange", () => {
 
 
 // 3D SKILL CARD DECK — Linear style
-// Cards stacked flat. Cursor Y position controls how many slide up.
-// Moving cursor from bottom to top progressively lifts each card.
+// Cards stacked flat. Scroll progress through the skills section controls
+// how many cards slide up. Scrolling down through the section progressively
+// lifts each card; scrolling back up restacks them.
 (function() {
   const scene = document.getElementById("deckScene");
   const stack = document.getElementById("deckStack");
-  if (!scene || !stack) return;
+  const section = document.getElementById("skills");
+  if (!scene || !stack || !section) return;
 
   const cards = Array.from(stack.querySelectorAll(".skill-card"));
   const N = cards.length;
@@ -119,48 +121,47 @@ document.addEventListener("visibilitychange", () => {
   // smooth reveal counter — 0 means all stacked, N means all lifted
   let reveal = 0;
   let targetReveal = 0;
-  let isInside = false;
 
   function place(reveal) {
     cards.forEach((card, i) => {
       // i=0 is the TOP card (Python), i=N-1 is bottom
-      const stackZ = (N - 1 - i) * -GAP; // base stack depth
+      const stackZ = i * -GAP; // base stack depth — card 0 is front/top
 
       // how much this card has been lifted
       // card i lifts when reveal > (N-1-i)
-      const liftAmount = Math.max(0, Math.min(1, reveal - (N - 1 - i)));
+      const liftAmount = Math.max(0, Math.min(1, reveal - i));
       const liftY = -liftAmount * LIFT;
 
       card.style.transform = `translateZ(${stackZ}px) translateY(${liftY}px)`;
       card.style.zIndex = N - i;
 
-      // mark the current "top visible" card
-      const isTop = Math.round(reveal) === (N - 1 - i) || (reveal < 0.5 && i === 0);
       card.classList.toggle("is-top", i === 0 && reveal < 0.5 || liftAmount > 0 && liftAmount < 1);
     });
   }
 
-  place(0);
-
-  scene.addEventListener("mouseenter", () => { isInside = true; });
-
-  scene.addEventListener("mouseleave", () => {
-    isInside = false;
-    targetReveal = 0;
-  });
-
-  scene.addEventListener("mousemove", (e) => {
-    const r = scene.getBoundingClientRect();
-    // cursor from bottom=0 to top=1
-    const ny = 1 - (e.clientY - r.top) / r.height;
-    // map to 0 → N-1 cards revealed
-    targetReveal = ny * (N - 1);
-  });
-
+  function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
   function lerp(a, b, t) { return a + (b - a) * t; }
 
+  // Compute how far the user has scrolled through the skills section:
+  // 0 = section just entering the bottom of the viewport,
+  // 1 = section has fully passed the top of the viewport.
+  function updateTargetFromScroll() {
+    const rect = section.getBoundingClientRect();
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+    const total = rect.height + vh;
+    const scrolled = vh - rect.top;
+    const progress = clamp(scrolled / total, 0, 1);
+    targetReveal = progress * (N - 1);
+  }
+
+  window.addEventListener("scroll", updateTargetFromScroll, { passive: true });
+  window.addEventListener("resize", updateTargetFromScroll);
+
+  updateTargetFromScroll();
+  place(reveal);
+
   function tick() {
-    reveal = lerp(reveal, isInside ? targetReveal : 0, 0.1);
+    reveal = lerp(reveal, targetReveal, 0.1);
     place(reveal);
     requestAnimationFrame(tick);
   }
