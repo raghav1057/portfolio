@@ -715,13 +715,51 @@ section.visible, article.visible { opacity: 1; transform: translateY(0); }
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
-  nav { padding: 1rem; }
-  .nav-links { gap: 1rem; }
-  section { padding: 3rem 1.25rem; }
-  h1 { font-size: 38px; }
-  .project-row { grid-template-columns: 1fr; }
-  .project-visual { display: none; }
+  /* NAV */
+  nav { padding: 1rem 1.25rem; }
+  .nav-links { gap: 0.85rem; }
+  .nav-links a { font-size: 12px; }
+  a.nav-logo { font-size: 18px; }
+
+  /* SECTIONS */
+  section { padding: 2.5rem 1.25rem; }
+
+  /* HERO */
+  #hero { padding: 3rem 1.25rem 2.5rem; }
+  h1 { font-size: 36px; letter-spacing: -0.01em; }
+  .tagline { font-size: 15px; max-width: 100%; }
+  .typewriter-line { font-size: 13px; }
+  .cta-buttons { gap: 10px; }
+  .btn-primary, .btn-secondary { font-size: 12px; padding: 9px 18px; }
+
+  /* ABOUT */
+  .about-text { font-size: 14px; }
+
+  /* PROJECTS — stack columns, keep the full visual card */
+  .project-row { grid-template-columns: 1fr; gap: 1.25rem; }
+  .project-title { font-size: 17px; }
+  .project-desc { font-size: 13px; }
+
+  /* SKILLS */
+  .skills-layout { grid-template-columns: 1fr; }
+  .skills-deck-col { display: none; }
+  .skills-list { gap: 6px; }
+  .skills-list li { font-size: 11px; padding: 4px 10px; }
+
+  /* WRITING */
+  .writing-card { max-width: 100%; }
+
+  /* FOOTER */
+  footer { padding: 1.5rem 1.25rem; }
+
   #back-to-top { bottom: 1rem; right: 1rem; }
+}
+
+/* small phones */
+@media (max-width: 380px) {
+  h1 { font-size: 30px; }
+  .nav-links { gap: 0.6rem; }
+  .nav-links a { font-size: 11px; }
 }
 
 
@@ -781,28 +819,6 @@ section.visible, article.visible { opacity: 1; transform: translateY(0); }
   border-color: #3a3a3a;
   transform: translateY(-3px) scale(1.012);
   background: #151515;
-}
-
-/* RP LOGO — hollow outline, fills on hover */
-.nav-logo {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-}
-
-.rp-logo {
-  width: 48px;
-  height: 28px;
-  overflow: visible;
-}
-
-.rp-text {
-  transition: fill 0.3s ease, stroke 0.3s ease;
-}
-
-.nav-logo:hover .rp-text {
-  fill: #b8f94a;
-  stroke: #b8f94a;
 }
 
 /* RP LOGO — text with hollow stroke effect */
@@ -937,4 +953,79 @@ a.nav-logo:hover {
 @media (max-width: 768px) {
   .skills-layout { grid-template-columns: 1fr; }
   .skills-deck-col { display: none; }
+}
+
+/* ══════════════════════════════════════════════════════════
+   MOBILE PROJECT VISUALS — same desktop dashboard markup,
+   internals reflowed to a single column instead of side-by-side.
+   No content removed, no simplified stand-in — just restacked.
+   ══════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  .project-visual { font-size: 12px; }
+
+  /* — EcoTwin: sidebar / map / insights stack vertically — */
+  .et-topbar { font-size: 11px; padding: 0.6rem 0.75rem; gap: 0.5rem; }
+
+  .et-body {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 160px auto;
+    height: auto;
+  }
+
+  .et-sidebar {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    border-right: none;
+    border-bottom: 1px solid #1e1e1e;
+    padding: 0.6rem 0.7rem;
+    gap: 6px;
+  }
+
+  .et-nav-label { display: none; }
+
+  .et-nav-item {
+    font-size: 10px;
+    padding: 4px 9px;
+    background: #161616;
+    border-radius: 4px;
+  }
+
+  .et-nav-item.active { background: rgba(184,249,74,0.1); }
+
+  .et-map { min-height: 140px; }
+
+  .et-map-label { font-size: 9px; }
+
+  .et-insights {
+    border-left: none;
+    border-top: 1px solid #1e1e1e;
+    padding: 0.7rem;
+    gap: 8px;
+  }
+
+  .alert-title { font-size: 11px; }
+  .alert-desc { font-size: 10px; }
+  .em-val, .em-key { font-size: 10px; }
+
+  /* — CodeForces: three panels stack instead of sitting side by side — */
+  .cf-panels { grid-template-columns: 1fr; }
+
+  .cf-panel {
+    border-right: none;
+    border-bottom: 1px solid #1e1e1e;
+    padding: 0.75rem;
+  }
+
+  .cf-panel:last-child { border-bottom: none; }
+
+  .cf-panel-title { font-size: 11px; }
+  .cf-key, .cf-val { font-size: 10px; }
+  .cf-upcoming-item { font-size: 10px; }
+  .cf-weak-tags span { font-size: 9px; }
+
+  /* — WeatherApp: already a centered card, just loosen the padding — */
+  .weather-visual { padding: 1.25rem 1rem; }
+  .w-card { max-width: 100%; }
 }
