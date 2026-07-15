@@ -1,10 +1,10 @@
 // TYPEWRITER EFFECT
 const phrases = [
   "building things. sometimes they even work.",
+  "powered by curiosity and bad wifi.",
+  "learning by day, building by night.",
   "Googling first, panicking second.",
   "making APIs do the heavy lifting.",
-  "learning in public, cringing in private.",
-  "powered by curiosity and bad wifi."
 ];
 
 const el = document.getElementById("typewriter-text");
